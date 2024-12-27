@@ -1,16 +1,20 @@
-from kivy.app import App
-from kivy.uix.label import Label
-from freq_calc import CPLFrequencyManager
-from kivy.graphics import Color, Rectangle
-from kivy.core.window import Window
-from kivy.uix.label import Label
-from kivy.uix.popup import Popup
-from kivy.uix.textinput import TextInput
-from kivy.uix.floatlayout import FloatLayout
-from kivy.uix.dropdown import DropDown
-from kivy.uix.button import Button
-from kivy.uix.boxlayout import BoxLayout
 from kivy.animation import Animation
+from kivy.app import App
+from kivy.uix.image import Image
+from kivy.uix.boxlayout import BoxLayout
+from kivy.uix.button import Button
+from kivy.uix.dropdown import DropDown
+from kivy.uix.floatlayout import FloatLayout
+from kivy.uix.textinput import TextInput
+from kivy.uix.popup import Popup
+from kivy.uix.label import Label
+from kivy.core.window import Window
+from kivy.graphics import Color, Rectangle
+from freq_calc import CPLFrequencyManager
+from kivy.config import Config
+Config.set('graphics', 'width', '0')  # Automatically fit screen width
+Config.set('graphics', 'height', '0')  # Automatically fit screen height
+Config.set('graphics', 'fullscreen', 'auto')  # Enable fullscreen
 
 
 class MyWidget(FloatLayout):
@@ -20,6 +24,7 @@ class MyWidget(FloatLayout):
         self.dropdown_options = self.get_dropdown_options()
         self.selected_options = {}
         self.text_inputs = {}
+        self.image_widget = None
 
         self.create_dropdown_buttons()
         self.create_text_inputs()
@@ -140,6 +145,11 @@ class MyWidget(FloatLayout):
         if index == 0:
             self.calculer_button.disabled = False
 
+        # Remove existing image if any
+        if self.image_widget:
+            self.remove_widget(self.image_widget)
+            self.image_widget = None
+
         # Set default values for "Type de voie (Emission Voie I)", "Type de voie (Emission Voie II)", "Type de voie (Reception Voie I)", and "Type de voie (Reception Voie II)" when "OPC-2" is selected
         if selected_text == "OPC-2":
             self.selected_options["Type de voie (Emission Voie I)"] = "voie_direct"
@@ -171,6 +181,13 @@ class MyWidget(FloatLayout):
             self.selected_options["Type de voie (Reception Voie I)"] = "voie_inversée"
             self.main_button2.text = "voie_inversée"
             self.main_button4.text = "voie_inversée"
+            # Add image for S2/S3
+            self.image_widget = Image(
+                source='/Users/iWadie/Desktop/world_of_coding/Tuto/Programming /Python/My_own_projects/Tkinter/CPL_Frequency_Calculator_Triangle/resources/images/s2-s3_image_test.png',
+                size_hint=(1, 0.2),
+                pos_hint={'center_x': 0.5, 'center_y': 0.3}
+            )
+            self.add_widget(self.image_widget)
 
         # Set default values for "Pilote HF", "Type de voie (Emission Voie I)", "Type de voie (Emission Voie II)", "Type de voie (Reception Voie I)", and "Type de voie (Reception Voie II)" when "STE-N" or "ALSPA 1790B" is selected
         if selected_text in ["STE-N", "ALSPA 1790B"]:
@@ -278,7 +295,7 @@ class MyWidget(FloatLayout):
 
     def create_animated_label(self):
         self.animated_label = Label(
-            text="CPL Calculator App -- ONEE Telecom Meknes",
+            text="CPL Calculator App -- © ONEE Telecom Meknes",
             size_hint=(None, None),
             size=(400, 50),
             pos=(Window.width, Window.height * 0.01),

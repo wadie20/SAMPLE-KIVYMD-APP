@@ -1,4 +1,3 @@
-from kivy.animation import Animation
 from kivy.app import App
 from kivy.uix.image import Image
 from kivy.uix.boxlayout import BoxLayout
@@ -10,7 +9,9 @@ from kivy.uix.popup import Popup
 from kivy.uix.label import Label
 from kivy.core.window import Window
 from kivy.graphics import Color, Rectangle
+from kivy.metrics import dp
 from freq_calc import CPLFrequencyManager
+from kivy.animation import Animation
 from kivy.config import Config
 Config.set('graphics', 'width', '0')  # Automatically fit screen width
 Config.set('graphics', 'height', '0')  # Automatically fit screen height
@@ -53,7 +54,7 @@ class MyWidget(FloatLayout):
                 btn = Button(
                     text=option,
                     size_hint_y=None,
-                    height=44,
+                    height=dp(44),
                     background_color=(0.3059, 0.4196, 0.6235, 1),
                     background_normal='',
                 )
@@ -63,7 +64,8 @@ class MyWidget(FloatLayout):
 
             main_button = Button(
                 text=button_text,
-                size_hint=(1, 0.05),
+                size_hint=(1, None),
+                height=dp(50),
                 pos_hint={'center_x': 0.5, 'center_y': 0.95 - i * 0.06},
                 background_color=(0.454, 0.745, 0.757, 1),
                 background_normal='',
@@ -94,7 +96,8 @@ class MyWidget(FloatLayout):
     def create_calculate_button(self):
         self.calculer_button = Button(
             text="Calculer",
-            size_hint=(1, 0.1),
+            size_hint=(1, None),
+            height=dp(50),
             pos_hint={'center_x': 0.5, 'center_y': 0.1},
             background_color=(0.454, 0.745, 0.757, 1),
             background_normal='',
@@ -106,7 +109,8 @@ class MyWidget(FloatLayout):
     def create_text_input(self, hint_text, pos_y, validate_func=None, input_filter=None):
         text_input = TextInput(
             hint_text=hint_text,
-            size_hint=(1, 0.05),
+            size_hint=(1, None),
+            height=dp(50),
             pos_hint={'center_x': 0.5, 'center_y': pos_y},
             background_color=(1, 1, 1, 1),
             foreground_color=(0, 0, 0, 1),
@@ -244,14 +248,14 @@ class MyWidget(FloatLayout):
 
     def show_popup(self, title, message):
         popup_content = BoxLayout(
-            orientation='vertical', padding=10, spacing=10)
+            orientation='vertical', padding=dp(10), spacing=dp(10))
         popup_content.add_widget(Label(text=message, size_hint=(
-            1, 0.8), text_size=(380, None), halign='center'))
+            1, 0.8), text_size=(dp(380), None), halign='center'))
         close_button = Button(text="Close", size_hint=(1, 0.2))
         popup_content.add_widget(close_button)
 
         popup = Popup(title=title, content=popup_content, size_hint=(
-            None, None), size=(400, 300), auto_dismiss=False)
+            None, None), size=(dp(400), dp(300)), auto_dismiss=False)
         close_button.bind(on_release=popup.dismiss)
         popup.open()
 
@@ -297,7 +301,7 @@ class MyWidget(FloatLayout):
         self.animated_label = Label(
             text="CPL Calculator App -- © ONEE Telecom Meknes",
             size_hint=(None, None),
-            size=(0.8, 0.05),
+            size=(dp(400), dp(50)),
             pos_hint={'center_x': 0.5, 'center_y': 0.05},
             color=(1, 1, 1, 1)
         )

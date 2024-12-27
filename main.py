@@ -185,7 +185,7 @@ class MyWidget(FloatLayout):
             self.image_widget = Image(
                 source='/Users/iWadie/Desktop/world_of_coding/Tuto/Programming /Python/My_own_projects/Tkinter/CPL_Frequency_Calculator_Triangle/resources/images/s2-s3_image_test.png',
                 size_hint=(1, 0.2),
-                pos_hint={'center_x': 0.5, 'center_y': 0.3}
+                pos_hint={'center_x': 0.5, 'center_y': 0.2}
             )
             self.add_widget(self.image_widget)
 
@@ -297,8 +297,8 @@ class MyWidget(FloatLayout):
         self.animated_label = Label(
             text="CPL Calculator App -- © ONEE Telecom Meknes",
             size_hint=(None, None),
-            size=(400, 50),
-            pos=(Window.width, Window.height * 0.01),
+            size=(0.8, 0.05),
+            pos_hint={'center_x': 0.5, 'center_y': 0.05},
             color=(1, 1, 1, 1)
         )
         self.add_widget(self.animated_label)
